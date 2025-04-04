@@ -1,7 +1,5 @@
 # SL1AE-LSGLasso
+[**\[IJCNN 2025\] "Deep Robust Data Reconstruction via Smoothed L1-Autoencoder and Layerwise Sparse Group Lasso", Junyang Zhang, Wen Yang, Di Ming.**]([https://github.com/advml-group](https://github.com/AdvML-Group/SL1AE-LSGLasso)) 
 
-
-# PLASSO-L12
-[**\[AAAI 2019\] "A Probabilistic Derivation of LASSO and L12-Norm Feature Selections", Di Ming, Chris Ding, Feiping Nie.**](https://ojs.aaai.org/index.php/AAAI/article/view/4382) 
 
 Code will be released soon.
