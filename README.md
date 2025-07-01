@@ -21,7 +21,7 @@ The other settings for the hyperparameters are defined in the previous run_demo_
 ## Citation
 ```
 @InProceedings{IJCNN2025_SL1AE_Lasso,
-    author    = {Junyang Zhang, Wen Yang, Di Ming*},
+    author    = {Junyang Zhang, Wen Yang, Di Ming},
     title     = {Deep Robust Data Reconstruction via Smoothed L1-Autoencoder and Layerwise Sparse Group Lasso},
     booktitle = {2025 International Joint Conference on Neural Networks (IJCNN)},
     month     = {June},
