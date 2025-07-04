@@ -220,7 +220,7 @@ def main():
     print(args)
     print(args.reg_dec_lambda)
 
-    args.save_dir += '3_layers_1/' + datetime.now().strftime("%Y-%m-%d %H_%M_%S") + ' l21_l1_parser()'+ '_' +str(args.reg_enc_lambda)  +'/'
+    args.save_dir += datetime.now().strftime("%Y-%m-%d %H_%M_%S") + ' l21_l1_parser()'+ '_' +str(args.reg_enc_lambda)  +'/'
     if not os.path.exists(args.save_dir):
         os.mkdir(args.save_dir)
     save_arg_into_txt(args)
