@@ -254,11 +254,8 @@ def train(x, model: AutoEncoder, logger: Logger, criterion, optimizer, scheduler
 
 
         scheduler.step()
-        # dataset:ATNT, YaleB, Face_GT
-        # total_err = compute_relative_reconstruction_error(x, model, gt)
+        total_err = compute_relative_reconstruction_error(x, model, gt)
 
-        # dataset:AR
-        total_err = compute_AR_relative_reconstruction_error(x, model, gt, args)
 
         loss_history.append((i + 1, total_loss + total_reg, total_loss, total_reg, total_reg_enc, total_reg_dec, total_err))
 
@@ -319,14 +316,8 @@ def train(x, model: AutoEncoder, logger: Logger, criterion, optimizer, scheduler
                 # 3. Log images (image summary)
                 with torch.no_grad():
                     x_ = torch.transpose(model(x).detach().cpu(), 1, 0).numpy()
-                    # ATnT
-                    # x_ = imgrid(normalize(x_), 10, 10, 56, 46, 2)
-                    # AR
-                    x_ = imgrid(normalize(x_), 10, 15, 55, 40, 2)
-                    # YaleB
-                    # x_ = imgrid(normalize(x_), 15, 11, 64, 64, 2)
-                    # GT
-                    # x_ = imgrid(normalize(x_), 10, 10, 60, 40, 2)
+                    
+                    x_ = imgrid(normalize(x_), 10, 10, 56, 46, 2)
 
                 info = {'reconstruction_images': [x_]}
 
