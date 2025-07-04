@@ -16,11 +16,13 @@ The dataset is located in the "data" folder of the SL1AE_Lasso file, or refer to
 [YaleB] A. S. Georghiades, P. N. Belhumeur, and D. J. Kriegman, “From few to many: Illumination cone models for face recognition under variable lighting and pose,” IEEE Transactions on Pattern Analysis and Machine Intelligence, vol. 23, no. 6, pp. 643–660, 2001.
 [Face_GT] A. V. Nefian and M. H. H. III, “An embedded hmm-based approach for face detection and recognition,” in International Conference on Acoustics, Speech and Signal Processing, 1999, pp. 3553–3556.
 ## Training
-Run the following command
+Run the following command. Train using the SL1AE_Lasso model. You can also modify the hyperparameters or change the model to match the experimental setup in our paper.
 ```
 python run_demo_SL1AE_Lasso.py
 ```
 The other settings for the hyperparameters are defined in the previous run_demo_SL1AE_Lasso.py.
+##Tsting
+Evaluate our model based on the experimental results.
 ## Citation
 ```
 @InProceedings{IJCNN2025_SL1AE_Lasso,
