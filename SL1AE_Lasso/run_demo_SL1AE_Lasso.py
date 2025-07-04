@@ -252,7 +252,7 @@ def main():
     AR_disp_img(x_0, args.save_dir + 'X_0.png', args)
 
 
-    # 加噪声的YanleB
+    # YanleB
     # clean_data = loadmat(args.db)['D']
     # x0 = clean_data[:, 0:165]
     # disp_img(x0, args.save_dir + 'X0.png', args)
@@ -287,53 +287,6 @@ def main():
 
     output = torch.transpose(model(input.to(args.device)).detach().cpu(), 1, 0).numpy()
     print("output",output.shape)
-    # kmeans
-    x, y_true, num_class = read_data(args, output)
-
-    # num_trails = 10
-    num_trails = 10
-
-    s_C = np.zeros([num_class, num_class, num_trails], dtype=np.int32)
-    s_C_opt = np.zeros([num_class, num_class, num_trails], dtype=np.int32)
-    s_loss = np.zeros([num_trails, ])
-    s_acc = np.zeros([num_trails, ])
-    s_acc_opt = np.zeros([num_trails, ])
-
-    for i in range(num_trails):
-        loss, y_pred, C, acc = run_kmeans(x.T, y_true, num_class)  # X: n-by-p
-        C_opt, acc_opt = reorder_confusion_matrix(C)
-        s_C[:, :, i] = C
-        s_C_opt[:, :, i] = C_opt
-        s_loss[i] = loss
-        s_acc[i] = acc
-        s_acc_opt[i] = acc_opt
-        print('%d-th trial: loss=%f' % (i + 1, loss))
-
-    index = np.argmin(s_loss)
-    print('Pick %d-th trail with lowest objective function value' % (index + 1))
-    C = s_C[:, :, index]
-    acc = s_acc[index]
-    C_opt = s_C_opt[:, :, index]
-    acc_opt = s_acc_opt[index]
-    print('Original accuracy: %f' % acc)
-    print('After reordering, optimal accuracy: %f' % acc_opt)
-    # kmeans
-    file_writer = open(args.save_dir + 'acc.txt', 'w')
-    file_writer_content = ""
-    file_writer_content += ('%.2f' % (acc))
-    file_writer_content += '\n'
-    file_writer.write(file_writer_content)
-    file_writer.close()
-
-    file_writer = open(args.save_dir + 'acc_opt.txt', 'w')
-    file_writer_content = ""
-    file_writer_content += ('%.2f' % (acc_opt))
-    file_writer_content += '\n'
-    file_writer.write(file_writer_content)
-    file_writer.close()
-
-
-
     filename = 'X_recon.png'
     disp_img(output, args.save_dir + filename, args)
     # dataset:ATNT, YaleB, Face_GT
@@ -343,9 +296,6 @@ def main():
     compute_AR_reconstruction_performance(x_0, output,True)
     save_AR_reconstruction_performance(x_0, output, args, True)
     save_model(model, args)
-    end = time.perf_counter()
-    runTime = end - start
-    print("运行时间：", runTime)
 
 
 
