@@ -140,12 +140,12 @@ def l21_l1_parser():
     """ predefined arguments for l1-autoencoder with l21_l1 regularization """
     parser = argparse.ArgumentParser(description="Robust Data Reconstruction Using L1-Autoencoder")
     #-------------------------------------------------------------------------------------------------------------#
-    parser.add_argument("--db", type=str, default="./data/Face_AR_10x15_55x40_one_glass.mat")
+    parser.add_argument("--db", type=str, default="./data/Face_ATNT_10x10_56x46.mat")
     parser.add_argument("--dbtxt", type=str, default="./data/ATNTFaceImages.txt")
-    parser.add_argument("--image_grid", nargs='*', type=int, default=[10, 15, 55, 40, 2])
+    parser.add_argument("--image_grid", nargs='*', type=int, default=[10, 10, 56, 46, 2])
     parser.add_argument("--save_dir", type=str, default='./results/')
     parser.add_argument("--log_dir", type=str, default='./logs/')
-    parser.add_argument("--nlayers", nargs='*', type=int, default=[55 * 40,30,20, 8])
+    parser.add_argument("--nlayers", nargs='*', type=int, default=[56 * 46,30,20, 8])
     parser.add_argument("--batch_size", type=int, default=100)
     parser.add_argument("--epoch", type=int, default=30000)
     parser.add_argument("--pretrain_epoch", type=int, default=10000)
@@ -214,7 +214,6 @@ def l21_l1_exact_parser():
 
 
 def main():
-    start = time.perf_counter()
     parser = l21_l1_parser()
     args = parser.parse_args()
     args.reg_dec_lambda = args.reg_enc_lambda
