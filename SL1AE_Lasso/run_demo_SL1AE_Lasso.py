@@ -18,8 +18,6 @@ import shutil
 import time
 import numpy as np
 import random
-# for sd in np.arange(6,11,1):
-#     for lamd in np.arange(0.031, 0.08, 0.0005):
 def l2_parser():
     """ predefined arguments for l1-autoencoder with l2 regularization """
     parser = argparse.ArgumentParser(description="Robust Data Reconstruction Using L1-Autoencoder")
