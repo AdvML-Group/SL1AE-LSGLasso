@@ -21,7 +21,7 @@ Run the following command. Train using the SL1AE_Lasso model. You can also modif
 python run_demo_SL1AE_Lasso.py
 ```
 The other settings for the hyperparameters are defined in the previous run_demo_SL1AE_Lasso.py.
-## Tsting
+## Testing
 Evaluate our model based on the experimental results.
 ## Citation
 ```
