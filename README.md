@@ -10,7 +10,11 @@
 pip install -r requirements.txt
 ```
 ## Dataset
-See the data file inside
+The dataset is located in the "data" folder of the SL1AE_Lasso file, or refer to 
+[ATNT] F. Samaria and A. Harter, "Parameterisation of a stochastic model for" human face identification,” in Winter Conference on Applications of Computer Vision, 1994, pp. 138–142.
+[AR] A. M. Martínez and A. C. Kak, "PCA versus LDA," IEEE Transactions on Pattern Analysis and Machine Intelligence, vol. 23, no. 2, pp. 228–233, 2001. 
+[YaleB] A. S. Georghiades, P. N. Belhumeur, and D. J. Kriegman, “From few to many: Illumination cone models for face recognition under variable lighting and pose,” IEEE Transactions on Pattern Analysis and Machine Intelligence, vol. 23, no. 6, pp. 643–660, 2001.
+[Face_GT] A. V. Nefian and M. H. H. III, “An embedded hmm-based approach for face detection and recognition,” in International Conference on Acoustics, Speech and Signal Processing, 1999, pp. 3553–3556.
 ## Training
 Run the following command
 ```
