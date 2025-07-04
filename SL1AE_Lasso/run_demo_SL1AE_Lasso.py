@@ -27,7 +27,6 @@ def l2_parser():
     parser.add_argument("--db", type=str, default="./data/Face_GT_10x10_60x40_diming.mat")
     parser.add_argument("--dbtxt", type=str, default="./data/ATNTFaceImages.txt")
     parser.add_argument("--image_grid", nargs='*', type=int, default=[10, 10, 60, 40, 2])
-    parser.add_argument("--AR_image_grid", nargs='*', type=int, default=[10, 14, 55, 40, 2])
     parser.add_argument("--save_dir", type=str, default='./results/')
     parser.add_argument("--log_dir", type=str, default='./logs')
     parser.add_argument("--nlayers", nargs='*', type=int, default=[60 * 40,30, 20, 8])  # l1-ae: single hidden layer
@@ -70,7 +69,6 @@ def l1_parser():
     parser.add_argument("--db", type=str, default="./data/Face_YaleB_15x11_64x64_diming.mat")
     parser.add_argument("--dbtxt", type=str, default="./data/ATNTFaceImages.txt")
     parser.add_argument("--image_grid", nargs='*', type=int, default=[15, 11, 64, 64, 2])
-    parser.add_argument("--AR_image_grid", nargs='*', type=int, default=[10, 14, 55, 40, 2])
     parser.add_argument("--save_dir", type=str, default='./results/')
     parser.add_argument("--log_dir", type=str, default='./logs')
     parser.add_argument("--nlayers", nargs='*', type=int, default=[64 * 64, 500, 8])  # l1-ae: single hidden layer
@@ -106,7 +104,6 @@ def l21_parser():
     parser.add_argument("--db", type=str, default="./data/Face_GT_10x10_60x40_diming.mat")
     parser.add_argument("--dbtxt", type=str, default="./data/ATNTFaceImages.txt")
     parser.add_argument("--image_grid", nargs='*', type=int, default=[10, 10, 60, 40, 2])
-    parser.add_argument("--AR_image_grid", nargs='*', type=int, default=[10, 14, 55, 40, 2])
     parser.add_argument("--save_dir", type=str, default='./results/')
     parser.add_argument("--log_dir", type=str, default='./logs')
     parser.add_argument("--nlayers", nargs='*', type=int, default=[60 * 40, 30, 20, 8])  # l1-ae: single hidden layer
@@ -148,25 +145,24 @@ def l21_l1_parser():
     parser.add_argument("--db", type=str, default="./data/Face_AR_10x15_55x40_one_glass.mat")
     parser.add_argument("--dbtxt", type=str, default="./data/ATNTFaceImages.txt")
     parser.add_argument("--image_grid", nargs='*', type=int, default=[10, 15, 55, 40, 2])
-    parser.add_argument("--AR_image_grid", nargs='*', type=int, default=[10, 14, 55, 40, 2])
     parser.add_argument("--save_dir", type=str, default='./results/')
     parser.add_argument("--log_dir", type=str, default='./logs/')
-    parser.add_argument("--nlayers", nargs='*', type=int, default=[64 * 64,30,20, 8])
-    parser.add_argument("--batch_size", type=int, default=165)
+    parser.add_argument("--nlayers", nargs='*', type=int, default=[55 * 40,30,20, 8])
+    parser.add_argument("--batch_size", type=int, default=100)
     parser.add_argument("--epoch", type=int, default=30000)
     parser.add_argument("--pretrain_epoch", type=int, default=10000)
     parser.add_argument("--learning_rate", type=float, default=1e-3)
     #-------------------------------------------------------------------------------------------------------------#
     parser.add_argument("--reg_enc", type=str, choices=['l2', 'l1', 'l21', 'l21_l1'], default='l21_l1')
-    parser.add_argument("--reg_enc_lambda", type=float, default=0.04)   # recon_loss=18776/encoder_weight_sparsity=20.69%
+    parser.add_argument("--reg_enc_lambda", type=float, default=0.4)   # recon_loss=18776/encoder_weight_sparsity=20.69%
     parser.add_argument("--reg_enc_c", type=float, default=3)
-    parser.add_argument("--reg_enc_m", type=float, default=0.7)
+    parser.add_argument("--reg_enc_m", type=float, default=0.5)
     parser.add_argument("--reg_enc_solver", type=str, choices=['exact', 'approx'], default='approx')  # exact: l1->l21, approx: l21->l1
     #-------------------------------------------------------------------------------------------------------------#
     parser.add_argument("--reg_dec", type=str, choices=['l2', 'l1', 'l21', 'l21_l1'], default='l21_l1')
-    parser.add_argument("--reg_dec_lambda", type=float, default=0.04)
+    parser.add_argument("--reg_dec_lambda", type=float, default=0.4)
     parser.add_argument("--reg_dec_c", type=float, default=3)
-    parser.add_argument("--reg_dec_m", type=float, default=0.3)
+    parser.add_argument("--reg_dec_m", type=float, default=0.5)
     parser.add_argument("--reg_dec_solver", type=str, choices=['exact', 'approx'], default='approx')  # exact: l1->l21, approx: l21->l1
     #-------------------------------------------------------------------------------------------------------------#
     parser.add_argument("--is_closure_used", type=bool, default=False)   # this version only supports first-order optimizer !!!
@@ -232,42 +228,14 @@ def main():
         os.mkdir(args.save_dir)
     save_arg_into_txt(args)
 
-    # ATnT
-    # clean_data = loadmat(args.db)['DIDX']
-    # x0 = clean_data[:, 0:100]
-    # disp_img(x0, args.save_dir + 'X0.png', args)
-    #
-    # data = loadmat(args.db)['DnIDX']
-    # x = data[:, 0:100]
-    # disp_img(x, args.save_dir + 'X.png', args)
-
-    # AR
-    data = loadmat(args.db)['D']
-    print(data.shape)
-    x = data[:, 0:150]
+    # dataset
+    clean_data = loadmat(args.db)['DIDX']
+    x0 = clean_data[:, 0:100]
+    disp_img(x0, args.save_dir + 'X0.png', args)
+    
+    data = loadmat(args.db)['DnIDX']
+    x = data[:, 0:100]
     disp_img(x, args.save_dir + 'X.png', args)
-    # The sunglasses occlusion in AR cannot obtain the true value, so the sunglasses image is indexed for deletion.
-    x0 = Xx0(x)
-    x_0 = x0[:, 0:140]
-    AR_disp_img(x_0, args.save_dir + 'X_0.png', args)
-
-
-    # YanleB
-    # clean_data = loadmat(args.db)['D']
-    # x0 = clean_data[:, 0:165]
-    # disp_img(x0, args.save_dir + 'X0.png', args)
-    # data = loadmat(args.db)['Dn']
-    # x = data[:, 0:165]
-    # disp_img(x, args.save_dir + 'X.png', args)
-
-    # GT
-    # clean_data = loadmat(args.db)['D']
-    # x0 = clean_data[:, 0:100]
-    # disp_img(x0, args.save_dir + 'X0.png', args)
-    # data = loadmat(args.db)['Dn']
-    # x = data[:, 0:100]
-    # disp_img(x, args.save_dir + 'X.png', args)
-
 
 
     gt = torch.from_numpy(x0.T).float()
@@ -289,12 +257,9 @@ def main():
     print("output",output.shape)
     filename = 'X_recon.png'
     disp_img(output, args.save_dir + filename, args)
-    # dataset:ATNT, YaleB, Face_GT
-    # compute_reconstruction_performance(x0, x, output, True)
-    # save_reconstruction_performance(x0, x, output, args, True)
-    # dataset:AR
-    compute_AR_reconstruction_performance(x_0, output,True)
-    save_AR_reconstruction_performance(x_0, output, args, True)
+    # dataset
+    compute_reconstruction_performance(x0, x, output, True)
+    save_reconstruction_performance(x0, x, output, args, True)
     save_model(model, args)
 
 
