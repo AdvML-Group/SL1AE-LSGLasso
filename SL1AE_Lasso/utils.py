@@ -31,16 +31,6 @@ def disp_img(X, filename, args):
 
 
 
-def AR_disp_img(X, filename, args):
-    im = imgrid(normalize(X), *args.AR_image_grid)
-    plt.figure()
-    plt.axis('off')
-    plt.imshow(im, cmap='gray', vmin=0, vmax=1)
-    # plt.show()
-    plt.savefig(filename, bbox_inches='tight',format='png')
-    plt.close()
-
-
 def save_arg_into_txt(args):
     path = args.save_dir
     f = open(path + 'args.txt', 'w')
@@ -242,3 +232,6 @@ def save_reconstruction_performance(X0, X, X_, args, is_print=False):
 
     file_writer.close()
 
+def save_model(model, args):
+    path = args.save_dir + 'pretrained_model'
+    torch.save(model.state_dict(), path)
