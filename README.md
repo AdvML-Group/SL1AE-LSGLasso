@@ -4,8 +4,8 @@
 
 # Getting Started
 ## Dependencies
-1.Install [Pytorch](https://pytorch.org/). This repo is tested with pytorch=1.13.0, python=3.9.13.  
-2.Create an Anaconda Python environment on other computers using the environment.yml file, as follows,  
+1. Install [Pytorch](https://pytorch.org/). This repo is tested with pytorch=1.13.0, python=3.9.13.  
+2. Create an Anaconda Python environment on other computers using the environment.yml file, as follows,  
 ```
 conda env create -f environment.yml
 ```
